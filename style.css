@@ -5,7 +5,6 @@
   --color-black: #202124;
   --color-gray: #343a3f;
   --color-white: #ffffff;
-  --color-light-white: #eceae3;
   --color-blue: #378eb3;
   --color-light-gray: #677880;
   --color-orange: #e9a19a;
@@ -53,7 +52,7 @@ h1 {
   width: 700px;
   height: 900px;
   border-radius: 10px;
-  background-color: var(--color-light-white);
+  background-color: var(--color-white);
 }
 
 .control__section {
@@ -129,7 +128,7 @@ h1 {
   box-shadow: inset 5px 5px 10px #1b4658, inset -5px -5px 10px #53d6ff;
 }
 
-.color.light-gray {
+.color.lightGray {
   background-color: var(--color-light-gray);
   left: calc(1.71 * var(--size-colors-container) / 2);
   top: calc(1.71 * var(--size-colors-container) / 2);
@@ -178,7 +177,7 @@ h1 {
   box-shadow: inset 5px 5px 10px #58214c, inset -5px -5px 10px #ff67ec;
 }
 
-.fill-paint-btn {
+.fill-btn {
   width: 80px;
   height: 80px;
   transform: translate(-50%, -50%);
@@ -195,13 +194,13 @@ h1 {
   transition: all var(--transition-duration) ease-in-out;
 }
 
-.fill-paint-btn:active {
+.fill-btn.active,
+.fill-btn:active {
   box-shadow: inset 5px 5px 10px #24292c, inset -5px -5px 10px #444b52;
 }
 
-.fill-paint-btn:hover {
+.fill-btn:hover {
   cursor: pointer;
-  font-size: 22px;
 }
 
 .control__thickness,
@@ -228,7 +227,7 @@ h1 {
 
 .control__rotate i {
   font-size: 40px;
-  color: var(--color-light-white);
+  color: var(--color-white);
   transition: all var(--transition-duration) ease-in-out;
 }
 
@@ -238,7 +237,7 @@ h1 {
 }
 
 .control__save {
-  border: 3px solid var(--color-light-white);
+  border: 3px solid var(--color-white);
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -246,7 +245,7 @@ h1 {
 }
 
 .control__save__btn {
-  background-color: var(--color-light-white);
+  background-color: var(--color-white);
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -269,5 +268,5 @@ h1 {
 .control__save:hover .control__save__btn {
   width: 83px;
   height: 83px;
-  font-size: 22px;
+  font-size: 20px;
 }
