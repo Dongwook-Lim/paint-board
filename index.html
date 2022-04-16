@@ -44,7 +44,7 @@
           <input
             type="range"
             min="0.1"
-            max="5"
+            max="10"
             value="2.5"
             step="0.1"
             class="control__thickness__range"
@@ -52,11 +52,14 @@
         </div>
         <div class="control__image">
           <h1 class="control__image__title">IMPORT IMAGE</h1>
-          <input
-            type="url"
-            placeholder="Put your image url!"
-            class="control__image__url"
-          />
+          <div class="control__image__container">
+            <input
+              type="url"
+              placeholder="Put your image url!"
+              class="control__image__url"
+            />
+            <button class="submit-btn">SUBMIT</button>
+          </div>
         </div>
         <div class="control__rotate">
           <h1 class="control__rotate__title">ROTATE</h1>

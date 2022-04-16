@@ -49,10 +49,7 @@ h1 {
 }
 
 #canvas {
-  width: 700px;
-  height: 900px;
   border-radius: 10px;
-  background-color: var(--color-white);
 }
 
 .control__section {
@@ -220,9 +217,22 @@ h1 {
 .control__thickness__range:hover {
   cursor: pointer;
 }
+
+.control__image__container {
+  display: flex;
+}
+
 .control__image__url {
-  width: 250px;
+  width: 200px;
   height: 25px;
+}
+
+.submit-btn {
+  margin-left: 8px;
+}
+
+.submit-btn:hover {
+  cursor: pointer;
 }
 
 .control__rotate i {

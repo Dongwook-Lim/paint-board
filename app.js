@@ -3,6 +3,9 @@ const ctx = canvas.getContext('2d');
 const colors = document.querySelector('.control__colors');
 const fillBtn = document.querySelector('.fill-btn');
 const inputRange = document.querySelector('.control__thickness__range');
+const submitBtn = document.querySelector('.submit-btn');
+const imageURL = document.querySelector('.control__image__url');
+const body = document.querySelector('body');
 
 const colorsObj = {
   black: '#202124',
@@ -16,17 +19,44 @@ const colorsObj = {
   purple: '#b3449c',
 };
 
-const INITIAL_STROKE_COLOR = colorsObj['balck'];
-const INITIAL_FILL_COLOR = colorsObj['white'];
+const INITIAL_STROKE_COLOR = colorsObj.black;
+const INITIAL_FILL_COLOR = colorsObj.white;
+const CANVAS_WIDTH = 700;
+const CANVAS_HEIGHT = 900;
 
-canvas.width = 700;
-canvas.height = 900;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
 let painting = false;
+let filling = false;
 
 ctx.strokeStyle = INITIAL_STROKE_COLOR;
 ctx.fillStyle = INITIAL_FILL_COLOR;
+ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 ctx.lineWidth = 2.5;
+
+if (canvas) {
+  canvas.addEventListener('mousedown', startPainting);
+  canvas.addEventListener('mouseup', stopPainting);
+  canvas.addEventListener('mouseleave', stopPainting);
+  canvas.addEventListener('mousemove', handleMouseMove);
+}
+
+if (colors) {
+  colors.addEventListener('click', handleColorClick);
+}
+
+if (fillBtn) {
+  fillBtn.addEventListener('click', handleFillBtnClick);
+}
+
+if (inputRange) {
+  inputRange.addEventListener('input', handleInputRange);
+}
+
+if (submitBtn) {
+  submitBtn.addEventListener('click', handleSubmitBtnClick);
+}
 
 function startPainting() {
   painting = true;
@@ -52,9 +82,9 @@ function handleMouseMove(event) {
 function handleColorClick(event) {
   const color = event.target.className.split(' ')[1];
   const colorRGB = colorsObj[color];
-  if (fillBtn.classList.contains('active')) {
+  if (filling) {
     ctx.fillStyle = colorRGB;
-    ctx.fillRect(0, 0, 700, 900);
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   } else {
     ctx.strokeStyle = colorRGB;
   }
@@ -63,6 +93,11 @@ function handleColorClick(event) {
 function handleFillBtnClick(event) {
   const target = event.target;
   target.classList.toggle('active');
+  if (filling === true) {
+    filling = false;
+  } else {
+    filling = true;
+  }
 }
 
 function handleInputRange(event) {
@@ -70,15 +105,19 @@ function handleInputRange(event) {
   ctx.lineWidth = value;
 }
 
-if (canvas) {
-  canvas.addEventListener('mousedown', startPainting);
-  canvas.addEventListener('mouseup', stopPainting);
-  canvas.addEventListener('mouseleave', stopPainting);
-  canvas.addEventListener('mousemove', handleMouseMove);
+function changeCanvasSize(width, height) {
+  canvas.width = width;
+  canvas.height = height;
 }
 
-colors.addEventListener('click', handleColorClick);
-
-fillBtn.addEventListener('click', handleFillBtnClick);
-
-inputRange.addEventListener('input', handleInputRange);
+function handleSubmitBtnClick() {
+  let imgURLValue = imageURL.value;
+  let backgroundImage = new Image();
+  backgroundImage.src = `${imgURLValue}`;
+  backgroundImage.onload = function () {
+    let imageWidth = backgroundImage.width;
+    let imageHeight = backgroundImage.height;
+    changeCanvasSize(imageWidth, imageHeight);
+    ctx.drawImage(backgroundImage, 0, 0);
+  };
+}
