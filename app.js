@@ -8,8 +8,8 @@ const inputImageURL = document.querySelector('.control__image__url');
 const rotateBtn = document.querySelector('.rotate-btn');
 const saveBtn = document.querySelector('.control__save__btn');
 
-const inMemCanvas = document.createElement('canvas');
-const inMemCtx = inMemCanvas.getContext('2d');
+// const inMemCanvas = document.createElement('canvas');
+// const inMemCtx = inMemCanvas.getContext('2d');
 
 const colorsObj = {
   black: '#202124',
@@ -33,7 +33,6 @@ canvas.height = CANVAS_HEIGHT;
 
 let painting = false;
 let filling = false;
-let backgroundImage = new Image();
 
 ctx.strokeStyle = INITIAL_STROKE_COLOR;
 ctx.fillStyle = INITIAL_FILL_COLOR;
@@ -119,32 +118,29 @@ function handleInputRange(event) {
   ctx.lineWidth = value;
 }
 
-function resizeCanvas(canvas, width, height) {
+function resizeCanvas(width, height) {
   canvas.width = width;
   canvas.height = height;
 }
 
 function handleSubmitBtnClick() {
+  let backgroundImage = new Image();
   let imgURLValue = inputImageURL.value;
   backgroundImage.src = `${imgURLValue}`;
-  resizeCanvas(canvas, backgroundImage.width, backgroundImage.height);
-  ctx.drawImage(backgroundImage, 0, 0);
+  backgroundImage.crossOrigin = 'Anonymous'; //For 'Tainted canvases may not be exported' error
+  resizeCanvas(backgroundImage.width, backgroundImage.height);
+  backgroundImage.onload = function () {
+    ctx.drawImage(backgroundImage, 0, 0);
+  };
 }
 
-function rotateCanvas(ctx, canvas, deg) {
+function rotateCanvas(deg) {
   ctx.translate(canvas.width / 2, canvas.height / 2);
   ctx.rotate((deg * Math.PI) / 180);
   ctx.translate(-canvas.width / 2, -canvas.height / 2);
 }
 
-function handleRotateBtn() {
-  inMemCanvas.width = canvas.width;
-  inMemCanvas.height = canvas.height;
-  inMemCtx.drawImage(canvas, 0, 0);
-  resizeCanvas(canvas, canvas.height, canvas.width);
-  rotateCanvas(ctx, canvas, 90);
-  ctx.drawImage(inMemCanvas, 0, 0);
-}
+function handleRotateBtn() {}
 
 function handleSaveBtn() {
   const dataURL = canvas.toDataURL('image/png');
