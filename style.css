@@ -11,11 +11,12 @@
   --color-red: #b3374d;
   --color-pink: #e9aabc;
   --color-purple: #b3449c;
+  --color-deep-blue: #0b293b;
 
   /* Size */
   --size-colors-container: 200px;
   --size-title: 30px;
-  --size-button-font: 18px;
+  --size-button-font: 22px;
 
   /* Animation */
   --transition-duration: 300ms;
@@ -27,7 +28,6 @@ body {
   background-position: center;
   display: flex;
   justify-content: space-evenly;
-  color: var(--color-white);
 }
 
 section {
@@ -40,12 +40,9 @@ section {
 
 h1 {
   font-size: 30px;
-  font-family: 'Rubik Microbe', cursive;
-  margin-bottom: 15px;
-}
-
-.canvas__title__container {
-  display: flex;
+  font-family: 'Oswald', sans-serif;
+  margin-bottom: 20px;
+  color: var(--color-white);
 }
 
 #canvas {
@@ -56,25 +53,25 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-gray);
+  background-color: var(--color-deep-blue);
   width: 330px;
   height: 900px;
   border-radius: 10px;
-  box-shadow: inset 5px 5px 7px #282c30, inset -5px -5px 7px #40484e;
+  border: 1px solid rgba(255, 255, 255, 0.65);
 }
 
 .control__colors__container,
-.control__thickness,
+.control__line-width,
 .control__image,
 .control__rotate {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 25px;
+  margin: 15px;
 }
 
 .control__colors__container {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .control__colors {
@@ -183,24 +180,24 @@ h1 {
   top: calc(var(--size-colors-container) / 2);
   border: none;
   border-radius: 50%;
-  background: #343a3f;
-  box-shadow: 5px 5px 10px #24292c, -5px -5px 10px #444b52;
+  background: var(--color-deep-blue);
+  box-shadow: 8px 8px 16px #06161f, -8px -8px 16px #103c57;
   color: var(--color-white);
-  font-family: 'Rubik Microbe', cursive;
+  font-family: 'Oswald', sans-serif;
   font-size: var(--size-button-font);
   transition: all var(--transition-duration) ease-in-out;
 }
 
 .fill-btn.active,
 .fill-btn:active {
-  box-shadow: inset 5px 5px 10px #24292c, inset -5px -5px 10px #444b52;
+  box-shadow: inset 8px 8px 16px #06161f, inset -8px -8px 16px #103c57;
 }
 
 .fill-btn:hover {
   cursor: pointer;
 }
 
-.control__thickness,
+.control__line-width,
 .control__image,
 .control__rotate {
   display: flex;
@@ -209,60 +206,47 @@ h1 {
   margin: 20px;
 }
 
-.control__thickness__range {
+.control__line-width__range {
   accent-color: var(--color-black);
   width: 200px;
 }
 
-.control__thickness__range:hover {
+.control__line-width__range:hover {
   cursor: pointer;
 }
 
 .control__image__container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .control__image__url {
-  width: 200px;
-  height: 25px;
+  width: 270px;
+  height: 30px;
+}
+
+.control__image__url::placeholder {
+  font-size: 18px;
+}
+
+.submit-btn-container {
+  border: 2px solid var(--color-white);
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-top: 15px;
 }
 
 .submit-btn {
-  margin-left: 8px;
-}
-
-.submit-btn:hover {
-  cursor: pointer;
-}
-
-.control__rotate i {
-  font-size: 40px;
-  color: var(--color-white);
-  transition: all var(--transition-duration) ease-in-out;
-}
-
-.control__rotate i:hover {
-  cursor: pointer;
-  transform: rotate(30deg);
-}
-
-.control__save {
-  border: 3px solid var(--color-white);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-top: 50px;
-}
-
-.control__save__btn {
   background-color: var(--color-white);
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: none;
-  font-family: 'Rubik Microbe', cursive;
+  font-family: 'Oswald', sans-serif;
   color: var(--color-black);
-  font-size: var(--size-button-font);
+  font-size: 13px;
   position: relative;
   top: 50%;
   left: 50%;
@@ -270,13 +254,44 @@ h1 {
   transition: all var(--transition-duration) ease;
 }
 
-.control__save:hover,
+.submit-btn:hover {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  font-size: 15px;
+}
+
+.control__rotate i {
+  font-size: 35px;
+  color: var(--color-white);
+  transition: all var(--transition-duration) linear;
+}
+
+.control__rotate i:hover {
+  cursor: pointer;
+  transform: rotate(90deg);
+}
+
+.control__save__btn {
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-deep-blue);
+  box-shadow: 8px 8px 16px #06161f, -8px -8px 16px #103c57;
+  font-family: 'Oswald', sans-serif;
+  font-size: var(--size-button-font);
+  color: var(--color-white);
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .control__save__btn:hover {
   cursor: pointer;
 }
 
-.control__save:hover .control__save__btn {
-  width: 83px;
-  height: 83px;
-  font-size: 20px;
+.control__save__btn:active {
+  box-shadow: inset 8px 8px 16px #06161f, inset -8px -8px 16px #103c57;
 }
