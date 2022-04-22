@@ -3,13 +3,10 @@ const ctx = canvas.getContext('2d');
 const colors = document.querySelector('.control__colors');
 const fillBtn = document.querySelector('.fill-btn');
 const inputRange = document.querySelector('.control__line-width__range');
-const submitBtn = document.querySelector('.submit-btn');
+const importBtn = document.querySelector('.import-btn');
 const inputImageURL = document.querySelector('.control__image__url');
 const rotateBtn = document.querySelector('.rotate-btn');
 const saveBtn = document.querySelector('.control__save__btn');
-
-// const inMemCanvas = document.createElement('canvas');
-// const inMemCtx = inMemCanvas.getContext('2d');
 
 const colorsObj = {
   black: '#202124',
@@ -33,6 +30,8 @@ canvas.height = CANVAS_HEIGHT;
 
 let painting = false;
 let filling = false;
+let degree = 0;
+let backgroundImage = new Image();
 
 ctx.strokeStyle = INITIAL_STROKE_COLOR;
 ctx.fillStyle = INITIAL_FILL_COLOR;
@@ -59,8 +58,8 @@ if (inputRange) {
   inputRange.addEventListener('input', handleInputRange);
 }
 
-if (submitBtn) {
-  submitBtn.addEventListener('click', handleSubmitBtnClick);
+if (importBtn) {
+  importBtn.addEventListener('click', handleImportBtnClick);
 }
 
 if (rotateBtn) {
@@ -97,7 +96,7 @@ function handleColorClick(event) {
   const colorRGB = colorsObj[color];
   if (filling) {
     ctx.fillStyle = colorRGB;
-    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   } else {
     ctx.strokeStyle = colorRGB;
   }
@@ -118,29 +117,52 @@ function handleInputRange(event) {
   ctx.lineWidth = value;
 }
 
-function resizeCanvas(width, height) {
-  canvas.width = width;
-  canvas.height = height;
-}
-
-function handleSubmitBtnClick() {
-  let backgroundImage = new Image();
+function handleImportBtnClick() {
   let imgURLValue = inputImageURL.value;
   backgroundImage.src = `${imgURLValue}`;
   backgroundImage.crossOrigin = 'Anonymous'; //For 'Tainted canvases may not be exported' error
-  resizeCanvas(backgroundImage.width, backgroundImage.height);
   backgroundImage.onload = function () {
+    canvas.width = backgroundImage.width;
+    canvas.height = backgroundImage.height;
     ctx.drawImage(backgroundImage, 0, 0);
   };
 }
 
-function rotateCanvas(deg) {
+function rotate(image) {
+  degree += 90;
+  if (degree >= 360) {
+    degree = 0;
+  }
+  if (degree === 0 || degree === 180) {
+    canvas.width = image.width;
+    canvas.height = image.height;
+  } else {
+    canvas.width = image.height;
+    canvas.height = image.width;
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
   ctx.translate(canvas.width / 2, canvas.height / 2);
-  ctx.rotate((deg * Math.PI) / 180);
-  ctx.translate(-canvas.width / 2, -canvas.height / 2);
+  ctx.rotate((degree * Math.PI) / 180);
+  ctx.drawImage(image, -image.width / 2, -image.height / 2);
+  ctx.restore();
 }
 
-function handleRotateBtn() {}
+// const temCanvas = document.createElement('canvas');
+// const temCtx = temCanvas.getContext('2d');
+// temCanvas.width = CANVAS_WIDTH;
+// temCanvas.height = CANVAS_HEIGHT;
+// temCtx.drawImage(canvas, 0, 0);
+
+function handleRotateBtn() {
+  if (backgroundImage.width === 0) {
+    // temCtx.drawImage(canvas, 0, 0);
+    // rotate(temCanvas);
+  } else {
+    rotate(backgroundImage);
+  }
+}
 
 function handleSaveBtn() {
   const dataURL = canvas.toDataURL('image/png');
