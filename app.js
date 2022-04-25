@@ -22,6 +22,7 @@ const colorsObj = {
 
 const INITIAL_STROKE_COLOR = colorsObj.black;
 const INITIAL_FILL_COLOR = colorsObj.white;
+const INITIAL_LINEWIDTH = 2.5;
 let CANVAS_WIDTH = 700;
 let CANVAS_HEIGHT = 900;
 
@@ -36,7 +37,7 @@ let backgroundImage = new Image();
 ctx.strokeStyle = INITIAL_STROKE_COLOR;
 ctx.fillStyle = INITIAL_FILL_COLOR;
 ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-ctx.lineWidth = 2.5;
+ctx.lineWidth = INITIAL_LINEWIDTH;
 
 if (canvas) {
   canvas.addEventListener('mousedown', startPainting);
@@ -125,6 +126,7 @@ function handleImportBtnClick() {
     canvas.width = backgroundImage.width;
     canvas.height = backgroundImage.height;
     ctx.drawImage(backgroundImage, 0, 0);
+    resetLineWidth();
   };
 }
 
@@ -147,6 +149,8 @@ function rotate(image) {
   ctx.rotate((degree * Math.PI) / 180);
   ctx.drawImage(image, -image.width / 2, -image.height / 2);
   ctx.restore();
+
+  resetLineWidth();
 }
 
 // const temCanvas = document.createElement('canvas');
@@ -174,4 +178,10 @@ function handleSaveBtn() {
 
 function handleContextMenu(event) {
   event.preventDefault();
+}
+
+function resetLineWidth() {
+  setTimeout(() => {
+    ctx.lineWidth = INITIAL_LINEWIDTH;
+  });
 }
